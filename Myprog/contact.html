@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Register Form</title>
+
+    <style>
+        body{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background-image: url('girl1.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .card{
+            width: fit-content;
+            padding: 2% 2%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            margin: 50px 0 0 100px;
+        }
+        .form-container{
+            margin: auto;
+        }
+        .form-control{
+            border: none;
+            border-bottom: 2px solid gray;
+            transition-duration: 0.3s;
+            width: 100%;
+        }
+        .form-control:focus{
+            border-bottom: 2px solid purple;
+            transition-duration: 0.3s;
+            outline: none;
+        }
+        .form-group{
+            margin-top: 30px;
+        }
+        a{
+            transition-duration: 0.3s;
+        }
+        a:hover{
+            color: #3C3F42;
+            transition-duration: 0.3s;
+        }
+        #submit{
+            background-color: #F45634;
+            transition-duration: 0.3s;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #submit:hover{
+            background-color: #F7350B;
+            transition-duration: 0.3s;
+        }
+        .error{
+            color: #CE2029;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="form-container">
+            <h4>OUSL STUDENT CONTACT FORM</h4>
+            <form id="contact-form" onsubmit="return formSubmit()">
+                <div class="form-group">
+                    <input type="text" id="title" name="title"  placeholder="Title" class="form-control"/>
+                    <span class="error" id="title-error"></span>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Your Name" class="form-control"/>
+                    <span class="error" id="name-error"></span>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="email" name="email" placeholder="Email" class="form-control"/>
+                    <span class="error" id="email-error"></span>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="phoneNo" name="phoneNo" placeholder="Phone Number" class="form-control"/>
+                    <span class="error" id="phoneNo-error"></span>
+                </div>
+                <div class="form-group">
+                    <select name="courseType" id="courseType" class="form-control">
+                        <option value="">course type</option>
+                        <option value="BSE">Bachelor of Software Engineering</option>
+                        <option value="BTECH">Bachelor of Engineering</option>
+                    </select>
+                    <span class="error" id="courseType-error"></span>
+                </div>
+                <h5 style="margin-top: 30px;">Which time you available?</h6>
+                <div class="form-group">
+                    <select name="contactMethod" id="contactMethod" class="form-control">
+                        <option value="phone">By phone</option>
+                        <option value="skype">From Skype</option>
+                    </select>
+                    <span class="error" id="contactMethod-error"></span>
+                </div>
+                <div class="form-group">
+                    <select name="availableHours" id="availableHours" class="form-control">
+                        <option value="8 To 10">Hours 8am to 10pm</option>
+                        <option value="10 To 12">Hours 10am to 12pm</option>
+                    </select>
+                    <span class="error" id="availableHours-error"></span>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" name="terms" id="terms" />
+                    <label for="terms">I agree to the <a href="https://www.ou.ac.lk/">Terms and Conditions</a>
+                    <br/><span class="error" id="terms-error"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" name="submitBtn" id="submit" value="Submit the form details" />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+    function formSubmit(){
+        event.preventDefault();
+        var title = document.querySelector("#title").value;
+        var name = document.querySelector("#name").value;
+        var email = document.querySelector("#email").value;
+        var phoneNo = document.querySelector("#phoneNo").value;
+        var courseType = document.querySelector("#courseType").value;
+        var contactMethod = document.querySelector("#contactMethod").value;
+        var availableHours = document.querySelector("#availableHours").value;
+        var terms = document.querySelector("#terms").checked ;
+
+        var isError = false;
+
+        if(title.trim() == ""){
+            document.querySelector("#title-error").innerHTML = "Title cannot be empty!";
+            isError = true;
+        }
+        if(name.trim() == ""){
+            document.querySelector("#name-error").innerHTML = "Name cannot be empty!";
+            isError = true;
+        }
+        if(email.trim() == ""){
+            document.querySelector("#email-error").innerHTML = "Email cannot be empty!";
+            isError = true;
+        }
+        if(!email.trim().includes("@")){
+            document.querySelector("#email-error").innerHTML = "Email is invalid!";
+            isError = true;
+        }
+        if(phoneNo.trim() == ""){
+            document.querySelector("#phoneNo-error").innerHTML = "Phone Number cannot be empty!";
+            isError = true;
+        }
+        if(courseType.trim() == ""){
+            document.querySelector("#courseType-error").innerHTML = "Course Type cannot be empty!";
+            isError = true;
+        }
+        if(contactMethod.trim() == ""){
+            document.querySelector("#contactMethod-error").innerHTML = "Contact Method cannot be empty!";
+            isError = true;
+        }
+        if(availableHours.trim() == ""){
+            document.querySelector("#availableHours-error").innerHTML = "Available Hours cannot be empty!";
+            isError = true;
+        }
+        if(!terms){
+            document.querySelector("#terms-error").innerHTML = "You must agree to the Terms and Conditions";
+            isError = true;
+        }
+
+        if(isError){
+            return false;
+        }
+
+        var xhr = new XMLHttpRequest();
+		xhr.open("POST","confirmation.php");
+
+        var myForm = document.querySelector("#contact-form");
+
+		xhr.onreadystatechange = function(){
+			if(this.readyState === 4 && this.status === 200){
+				alert(this.responseText);
+                myForm.reset();
+                document.querySelector("#title-error").innerHTML = "";
+                document.querySelector("#name-error").innerHTML = "";
+                document.querySelector("#email-error").innerHTML = "";
+                document.querySelector("#phoneNo-error").innerHTML = "";
+                document.querySelector("#courseType-error").innerHTML = "";
+                document.querySelector("#contactMethod-error").innerHTML = "";
+                document.querySelector("#availableHours-error").innerHTML = "";
+                document.querySelector("#terms-error").innerHTML = "";
+			}
+		};
+
+		var formData = new FormData(myForm);
+
+		xhr.send(formData);
+    }
+</script>
+</html>
